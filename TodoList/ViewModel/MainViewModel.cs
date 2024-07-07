@@ -6,10 +6,12 @@ namespace TodoList.ViewModel
 {
     public partial class MainViewModel : ObservableObject
     {
+        IConnectivity connectivity;
 
-        public MainViewModel()
+        public MainViewModel(IConnectivity connectivity)
         {
             Items = new ObservableCollection<string>();
+            this.connectivity = connectivity;
         }
 
 
@@ -21,12 +23,19 @@ namespace TodoList.ViewModel
         string text;
 
         [RelayCommand]
-        void Add()
+        async Task Add()
         {
             if (string.IsNullOrWhiteSpace(Text))
             {
                 return;
             }
+
+            if(connectivity.NetworkAccess != NetworkAccess.Internet)
+            {
+                await Shell.Current.DisplayAlert("Oops", "No internet connection", "OK");
+                return;
+            }
+
             Items.Add(text);
             Text = string.Empty;
         }
