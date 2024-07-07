@@ -19,8 +19,11 @@ namespace TodoList
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<MainViewModel>();
 
+            builder.Services.AddTransient<DetailPage>();
+            builder.Services.AddSingleton<DetailViewModel>();
+
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();

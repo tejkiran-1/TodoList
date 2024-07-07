@@ -40,5 +40,11 @@ namespace TodoList.ViewModel
             }
         }
 
+        [RelayCommand]
+        async Task Tap(string text)
+        {
+            await Shell.Current.GoToAsync($"{nameof(DetailPage)}?id={text}");
+        }
+
     }
 }
